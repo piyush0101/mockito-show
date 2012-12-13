@@ -10,6 +10,7 @@ public class TweetCountService {
 
     public int countTweetsFrom(String user) {
         TweetDownloader downloader = new TweetDownloader();
+        TweetPersister persister = new TweetPersister();
         List<Tweet> tweets = downloader.downloadData();
         int numberOfTweets = 0;
         for (Tweet tweet : tweets) {
@@ -17,6 +18,7 @@ public class TweetCountService {
                 numberOfTweets++;
             }
         }
+        persister.persistTweets(user, numberOfTweets);
         return numberOfTweets;
     }
 }

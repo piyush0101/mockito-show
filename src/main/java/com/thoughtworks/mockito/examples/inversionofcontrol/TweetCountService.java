@@ -24,6 +24,7 @@ public class TweetCountService {
                 numberOfTweets++;
             }
         }
+        persister.persistTweets(user, numberOfTweets);
         return numberOfTweets;
     }
 }

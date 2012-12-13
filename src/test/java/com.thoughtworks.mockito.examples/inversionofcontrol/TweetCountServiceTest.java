@@ -8,6 +8,8 @@ import org.junit.Test;
 import java.util.Arrays;
 
 import static junit.framework.Assert.assertEquals;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -23,7 +25,7 @@ public class TweetCountServiceTest {
         Tweet tweet2 = new Tweet("kate", "i love spying with mockito ;)");
 
         doReturn(Arrays.asList(tweet1, tweet2)).when(downloader).downloadData();
-        doNothing().when(persister).persistToDB();
+        doNothing().when(persister).persistTweets(anyString(), anyInt());
 
         TweetCountService service = new TweetCountService(downloader, persister);
         int numberOfTweets = service.countTweetsFrom("cece");
@@ -40,7 +42,7 @@ public class TweetCountServiceTest {
         Tweet tweet2 = new Tweet("kate", "i love spying with mockito ;)");
 
         doReturn(Arrays.asList(tweet1, tweet2)).when(downloader).downloadData();
-        doNothing().when(persister).persistToDB();
+        doNothing().when(persister).persistTweets(anyString(), anyInt());
 
         TweetCountService service = new TweetCountService(downloader, persister);
         int numberOfTweets = service.countTweetsFrom("piyush");
@@ -58,7 +60,7 @@ public class TweetCountServiceTest {
         Tweet tweet3 = new Tweet("kate", "its fun ;)");
 
         doReturn(Arrays.asList(tweet1, tweet2, tweet3)).when(downloader).downloadData();
-        doNothing().when(persister).persistToDB();
+        doNothing().when(persister).persistTweets(anyString(), anyInt());
 
         TweetCountService service = new TweetCountService(downloader, persister);
         int numberOfTweets = service.countTweetsFrom("kate");

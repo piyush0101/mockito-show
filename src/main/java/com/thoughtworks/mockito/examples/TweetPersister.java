@@ -3,7 +3,7 @@ package com.thoughtworks.mockito.examples;
 
 public class TweetPersister {
 
-    public void persistToDB() {
+    public void persistTweets(String user, int numberOfTweets) {
 
     }
 

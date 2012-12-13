@@ -12,4 +12,8 @@ public class AbstractTweetService {
        tweets = TweetDownloader.downloadTweets();
     }
 
+    public void persistTweets(String user, int numberOfTweets) {
+        TweetPersister.persistTweets();
+    }
+
 }
