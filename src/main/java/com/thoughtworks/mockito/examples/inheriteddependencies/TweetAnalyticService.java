@@ -5,7 +5,7 @@ import com.thoughtworks.mockito.examples.Tweet;
 public class TweetAnalyticService extends AbstractTweetService {
 
     public TweetAnalyticService() {
-        super();
+        super(null);
     }
 
     public void doSentimentAnalysis(String user) {

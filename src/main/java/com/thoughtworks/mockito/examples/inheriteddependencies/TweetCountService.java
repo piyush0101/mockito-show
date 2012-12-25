@@ -4,8 +4,14 @@ import com.thoughtworks.mockito.examples.Tweet;
 
 public class TweetCountService extends AbstractTweetService {
 
+    private TweetDownloaderHelper helper;
+
+    public TweetCountService(TweetDownloaderHelper downloaderHelper) {
+        super(downloaderHelper);
+    }
+
     public TweetCountService() {
-        super();
+        super(new TweetDownloaderHelper());
     }
 
     public int countTweetsFrom(String user) {

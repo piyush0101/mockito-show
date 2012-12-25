@@ -8,8 +8,8 @@ public class AbstractTweetService {
 
     protected List<Tweet> tweets;
 
-    public AbstractTweetService() {
-       tweets = TweetDownloader.downloadTweets();
+    public AbstractTweetService(TweetDownloaderHelper downloaderHelper) {
+       tweets = downloaderHelper.downloadTweets();
     }
 
     public void persistTweets(String user, int numberOfTweets) {

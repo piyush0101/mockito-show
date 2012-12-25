@@ -6,8 +6,14 @@ import java.util.List;
 
 public class TweetCountService {
 
+    private TweetDownloaderWrapper wrapper;
+
+    public TweetCountService(TweetDownloaderWrapper wrapper) {
+        this.wrapper = wrapper;
+    }
+
     public int countTweetsFrom(String user) {
-        List<Tweet> tweets = TweetDownloader.downloadTweets();
+        List<Tweet> tweets = wrapper.downloadTweets();
         int numberOfTweets = 0;
         for (Tweet tweet : tweets) {
             if (tweet.getUser().equals(user)) {
@@ -16,5 +22,11 @@ public class TweetCountService {
         }
         TweetPersister.persistTweets(user, numberOfTweets);
         return numberOfTweets;
+    }
+
+    private class TweetDownloaderWrapper {
+        public List<Tweet> downloadTweets() {
+            return TweetDownloader.downloadTweets();
+        }
     }
 }
