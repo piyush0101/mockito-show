@@ -12,23 +12,13 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
 
+import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 public class TweetCountServiceTestThinAir {
-
-    @BeforeClass
-    public void runBeforeClass() {
-
-    }
-
-    @Before
-    public void runBeforeEveryTest() {
-
-    }
-
 
     @Test
     public void shouldReturnZeroTweetsForAPersonWithoutAnyTweets() {
@@ -42,9 +32,49 @@ public class TweetCountServiceTestThinAir {
         doReturn(downloader).when(tweetCountService).createTweetDownloader();
         doReturn(persister).when(tweetCountService).createTweetPersister();
 
-        com.thoughtworks.mockito.examples.inversionofcontrol.TweetCountService service = new com.thoughtworks.mockito.examples.inversionofcontrol.TweetCountService(downloader, persister);
-        int numberOfTweets = service.countTweetsFrom("cece");
+        when(downloader.downloadData()).thenReturn(asList(tweet1, tweet2));
+
+        int numberOfTweets = tweetCountService.countTweetsFrom("cece");
 
         assertEquals(0, numberOfTweets);
+    }
+
+    @Test
+    public void shouldReturnASingleTweetForAUserWithASingleTweet() {
+        TweetCountService tweetCountService = spy(new TweetCountService());
+        TweetDownloader downloader = mock(TweetDownloader.class);
+        TweetPersister persister = mock(TweetPersister.class);
+
+        Tweet tweet1 = new Tweet("piyush", "mockito is awesome!");
+        Tweet tweet2 = new Tweet("kate", "i love spying with mockito)");
+
+        doReturn(downloader).when(tweetCountService).createTweetDownloader();
+        doReturn(persister).when(tweetCountService).createTweetPersister();
+
+        when(downloader.downloadData()).thenReturn(asList(tweet1, tweet2));
+
+        int numberOfTweets = tweetCountService.countTweetsFrom("piyush");
+
+        assertEquals(1, numberOfTweets);
+    }
+
+    @Test
+    public void shouldReturnMultipleTweetsForAUserWithMultipleTweets() {
+        TweetCountService tweetCountService = spy(new TweetCountService());
+        TweetDownloader downloader = mock(TweetDownloader.class);
+        TweetPersister persister = mock(TweetPersister.class);
+
+        Tweet tweet1 = new Tweet("piyush", "mockito is awesome!");
+        Tweet tweet2 = new Tweet("piyush", "coding is my favorite stress buster!");
+        Tweet tweet3 = new Tweet("kate", "i love spying with mockito)");
+
+        doReturn(downloader).when(tweetCountService).createTweetDownloader();
+        doReturn(persister).when(tweetCountService).createTweetPersister();
+
+        when(downloader.downloadData()).thenReturn(asList(tweet1, tweet2, tweet3));
+
+        int numberOfTweets = tweetCountService.countTweetsFrom("piyush");
+
+        assertEquals(2, numberOfTweets);
     }
 }
