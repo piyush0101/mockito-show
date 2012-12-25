@@ -3,19 +3,10 @@ package com.thoughtworks.mockito.examples.thinairdependencies;
 import com.thoughtworks.mockito.examples.Tweet;
 import com.thoughtworks.mockito.examples.TweetDownloader;
 import com.thoughtworks.mockito.examples.TweetPersister;
-import com.thoughtworks.mockito.examples.inversionofcontrol.*;
-import com.thoughtworks.mockito.examples.thinairdependencies.TweetCountService;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockito.MockitoAnnotations;
-
-import java.util.Arrays;
 
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 public class TweetCountServiceTestThinAir {
