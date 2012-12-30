@@ -16,8 +16,8 @@ Paul Hammant and Martin Fowler.
 .. _legacy code: http://hackerboss.com/legacy-code/
 
 So, as I said, systems which evolve over the course of many years have to be dealt with care and made testable while 
-taking small steps at a time. As my fellow ThoughtWorker Eitan Suez will call it, "Embrace and Extend". This blog 
-focusses on some hard to test patterns that I have seen myself/others struggling to make testable over the course of 
+taking small steps at a time. This blog focusses on some hard to test patterns that I have seen myself/others struggling 
+to make testable over the course of 
 last year or so. Examples here are very simplistic and may not show the real trouble you have to go through when 
 presented with a legacy system but that's the intention. I have tried to extract out those patterns in small examples so 
 that you may get the idea which probably gives you a hint to go in a direction which is more feasible at a given point in 
