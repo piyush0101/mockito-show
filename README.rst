@@ -130,7 +130,7 @@ We did not get rid of the inheritance hierarchy, since that would have been a pe
 tests to start with. Michael Feathers has a good section about constructors doing too much work and how to parameterize
 constructors to break the dependencies. This is a similar technique that we use here. We create a TweetDownloaderHelper 
 and pass it into the newly created constructor for AbstractTweetService. Since the constructor is parameterized, we can 
-now easily mock the dependency on TweetDownloaderHelper. Mockito uses asm and cglib libraries to generate byte code at 
+now easily mock the dependency on TweetDownloaderHelper. Mockito uses `asm`_ and `cglib`_ libraries to generate byte code at 
 runtime. It subclasses the mocked class on which you can then set expectations. This is an object `seam`_ that we identified 
 but we need not Extract Interface and implement that interface with a fake object since mockito can do that work for us.
 However, if your development strategy is such that you want to identify link/object seams in the system which probably
@@ -147,6 +147,8 @@ an eye out for `seams`_.
 .. _seams: http://www.informit.com/articles/article.aspx?p=359417&seqNum=3
 .. _Spring: http://www.springsource.org/
 .. _CI: http://en.wikipedia.org/wiki/Continuous_integration
+.. _asm: http://asm.ow2.org/
+.. _cglib: http://cglib.sourceforge.net/
 
 And, here's a test for our refactoring. Uses mockito to mock the dependency.
 
