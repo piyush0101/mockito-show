@@ -186,8 +186,13 @@ you know you have this kind of problem:
 
 .. code-block:: java
 
-  TweetDownloader = new TweetDownloader(); // thin air dependency
-  List<Tweet> tweets = TweetDownloader.downloadTweets(); // static dependency
+  void m1() {
+    TweetDownloader = new TweetDownloader(); // thin air dependency
+  }
+
+  void m2() {
+    List<Tweet> tweets = TweetDownloader.downloadTweets(); // static dependency
+  }
 
 Its like grabbing a dependency out of thin air! Ideal solution would be to inject dependencies, but tests first and then 
 more pervasive refactoring is an implied rule in legacy.
