@@ -2,8 +2,8 @@
 Easy Refactoring with Mockito
 =============================
 
-I aim to provide here a few insights into dealing with difficult to test code. Most of the time, when dealing with legacy 
-code, you come across wildly tangled code. Dependencies are not well defined which results in tightly coupled, difficult 
+I aim to provide here a few insights into dealing with difficult to test code. Most of the time, when dealing with `legacy 
+code`_, you come across wildly tangled code. Dependencies are not well defined which results in tightly coupled, difficult 
 to test code. Legacy systems which are running since a decade, have evolved in an strictly driven, its-ugly-but-it-works 
 kind of environment are usually not very easy to fix overnight.
 
@@ -13,6 +13,7 @@ Paul Hammant and Martin Fowler.
 
 .. _Inversion of Control: http://paulhammant.com/blog/what-brought-me-to-inversion-of-control-in-the-first-place.html
 .. _Dependency Injection: http://martinfowler.com/articles/injection.html
+.. _legacy code: http://hackerboss.com/legacy-code/
 
 So, as I said, systems which evolve over the course of many years have to be dealt with care and made testable while 
 taking small steps at a time. As my fellow ThoughtWorker Eitan Suez will call it, "Embrace and Extend". This blog 
@@ -132,7 +133,7 @@ runtime. It subclasses the mocked class on which you can then set expectations. 
 but we need not Extract Interface and implement that interface with a fake object since mockito can do that work for us.
 However, if your development strategy is such that you want to identify link/object seams in the system which probably
 are dependent on external services, it would be really useful to extract interfaces and provide their stubbed/test 
-implementations in your CI builds. Seams are really powerful! Spring can also help you in this strategy with its context 
+implementations in your CI builds. Seams are really powerful! `Spring`_ can also help you in this strategy with its context 
 based bean lookups. You can run your build with a production context (with all the required services) / test context 
 (with fake implementations of all the services) / partial contexts (with some of the services mocked). I recently used 
 Spring to do this at one of our clients. We were integrating with an external service which we did not care for most of
@@ -142,6 +143,7 @@ an eye out for `seams`_.
 
 .. _seam: http://www.informit.com/articles/article.aspx?p=359417&seqNum=3
 .. _seams: http://www.informit.com/articles/article.aspx?p=359417&seqNum=3
+.. _Spring: http://www.springsource.org/
 
 And, here's a test for our refactoring. Uses mockito to mock the dependency.
 
@@ -243,3 +245,9 @@ after refactoring.
         assertEquals(0, numberOfTweets);
     }
   }
+
+This was a very simple approach showing very simple examples of some not so good patterns you find in code. Even when
+starting on a green field project, make sure the system evolves in a non legacy manner. Write tests, follow TDD and see
+the results. Code evolves a lot better!
+
+Enjoy!
