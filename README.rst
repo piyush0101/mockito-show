@@ -4,10 +4,10 @@ Easy Refactoring with Mockito
 
 I aim to provide here a few insights into dealing with difficult to test code. Most of the time, when dealing with `legacy 
 code`_, you come across wildly tangled code. Dependencies are not well defined which results in tightly coupled, difficult 
-to test code. Legacy systems which are running since a decade, have evolved in an strictly driven, its-ugly-but-it-works 
+to test code. Legacy systems which are running since a decade, have evolved in a strictly deadline driven, its-ugly-but-it-works 
 kind of environment are usually not very easy to fix overnight.
 
-The best kind of system that is very easily testable is the one which follows good inversion of control/dependency 
+The best kind of system that is easily testable is the one which follows good inversion of control/dependency 
 injection patterns. Here are a couple of good articles about `Inversion of Control`_ and `Dependency Injection`_ from 
 Paul Hammant and Martin Fowler.
 
@@ -18,7 +18,7 @@ Paul Hammant and Martin Fowler.
 So, as I said, systems which evolve over the course of many years have to be dealt with care and made testable while 
 taking small steps at a time. This blog focusses on some hard to test patterns that I have seen myself/others struggling 
 to make testable over the course of 
-last year or so. Examples here are very simplistic and may not show the real trouble you have to go through when 
+last year or so. Examples here are very simple and may not show the real trouble you have to go through when 
 presented with a legacy system but that's the intention. I have tried to extract out those patterns in small examples so 
 that you may get the idea which probably gives you a hint to go in a direction which is more feasible at a given point in 
 time/refactoring.
@@ -32,9 +32,11 @@ I would highly recommend reading that book.
 
 .. _Test Pyramid: http://martinfowler.com/bliki/TestPyramid.html
 
-I am taking a slightly lighter, basic route with basic dependency breaking techniques explained with Mockito. Mockito is a
+I am taking a slightly lighter, basic route with basic dependency breaking techniques explained with `Mockito`_. Mockito is a
 wonderful mocking/stubbing library which helps you test your refactoring very easily. Dependencies that I describe here are
 classified in following categories:
+
+.. _Mockito: http://code.google.com/p/mockito/
 
 * **Inherited Dependency**
 * **ThinAir Dependency**
@@ -43,7 +45,7 @@ classified in following categories:
 
 The last one is the ideal case and the rest are a few we can refactor in incremental steps to reach the final goal of 
 dependency injection. Refactoring from the worst kind of dependency tangle (inherited dependency) to Dependency Injection
-may (and is often not) a one step process. First goal is to make code testable and then continuously improve.
+may (and is often not) not be a one step process. First goal is to make code testable and then continuously improve.
 
 Now, let's get take a deep dive into these problems and a few possible solutions.
 
@@ -87,7 +89,7 @@ tweets from. And anyways, there's no clear contract of what this class is suppos
 problem would be to replace inheritance with composition but that may not always be possible due to a lot of factors 
 like time, deadlines, deeply tangled code etc. What we need to do in those cases is to make the minimum changes that help 
 us in making the code testable. We can take a faster route and get some tests in place and then make more pervasive 
-changes. Michael Feathers has done an amazing job in conveying the idea of taking small steps at a time while writing refactoring
+changes. Michael Feathers has done an amazing job in conveying the idea of taking small steps at a time while refactoring
 and writing tests in legacy code.
 
 Here's the code after minimal amount of refactoring. Just enough to make the code testable.
@@ -144,6 +146,7 @@ an eye out for `seams`_.
 .. _seam: http://www.informit.com/articles/article.aspx?p=359417&seqNum=3
 .. _seams: http://www.informit.com/articles/article.aspx?p=359417&seqNum=3
 .. _Spring: http://www.springsource.org/
+.. _CI: http://en.wikipedia.org/wiki/Continuous_integration
 
 And, here's a test for our refactoring. Uses mockito to mock the dependency.
 
@@ -172,12 +175,16 @@ Other kinds of dependencies which infiltrate the code and make it really hard to
 dependencies. Static dependencies for me are static method calls to a util/service class within some method. Static 
 dependencies can come as global references, singletons or just plain static method calls. I generally use extract method 
 and override refactoring to make this code more testable. One good thing about mockito is its support for partial mocks. 
-You can 'spy' on objects and mock only certain methods of the class This is really powerful in the sense that in you test
-class you need to write boiler plate code of creating a class and overriding the methods that you need. Again, if you 
+You can 'spy' on objects and mock only certain methods of the class. This is really powerful in the sense that in your test
+class you do not need to write boiler plate code of creating a class and overriding the methods that you need. I had 
+wished for this convenience while testing with `EasyMock`_ and `Unitils`_. Again, if you 
 have to make methods protected instead of private, it may be worth looking back at the class to see how much work it is
 doing. It may be taking more responsibilities than it should. But remember, we are dealing with legacy code and improving 
 legacy code overnight is not the easiest thing to do. Have a look at the test classes in the code for getting an idea on 
 how to spy / partial mock classes. 
+
+.. _EasyMock: http://www.easymock.org/EasyMock2_2_2_ClassExtension_Documentation.html
+.. _Unitils: http://www.unitils.org/
 
 ThinAir dependencies as I like to call them are the dependencies grabbed out of thin air in a constructor/method call 
 usually by creating a new instance of a collaborator class. These again are hard to mock and hence hard to test. We use
