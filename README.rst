@@ -128,7 +128,7 @@ tests to start with. Michael Feathers has a good section about constructors doin
 constructors to break the dependencies. This is a similar technique that we use here. We create a TweetDownloaderHelper 
 and pass it into the newly created constructor for AbstractTweetService. Since the constructor is parameterized, we can 
 now easily mock the dependency on TweetDownloaderHelper. Mockito uses asm and cglib libraries to generate byte code at 
-runtime. It subclasses the mocked class on which you can then set expectations. This is an object seam that we identified 
+runtime. It subclasses the mocked class on which you can then set expectations. This is an object `seam`_ that we identified 
 but we need not Extract Interface and implement that interface with a fake object since mockito can do that work for us.
 However, if your development strategy is such that you want to identify link/object seams in the system which probably
 are dependent on external services, it would be really useful to extract interfaces and provide their stubbed/test 
@@ -138,7 +138,10 @@ based bean lookups. You can run your build with a production context (with all t
 Spring to do this at one of our clients. We were integrating with an external service which we did not care for most of
 our tests. I could easily separate out the JNDI lookup implementation and a fake implementation with Spring and created
 separate contexts for both of them. Rest everything worked like magic! Again, while working with legacy code, always keep
-an eye out for seams.
+an eye out for `seams`_. 
+
+.. _seam: http://www.informit.com/articles/article.aspx?p=359417&seqNum=3
+.. _seams: http://www.informit.com/articles/article.aspx?p=359417&seqNum=3
 
 And, here's a test for our refactoring. Uses mockito to mock the dependency.
 
